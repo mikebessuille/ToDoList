@@ -4,6 +4,10 @@
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
+
+#include "ListPanel.h"
+
+
 class MyApp : public wxApp
 {
 public:
@@ -18,6 +22,12 @@ private:
 	void OnHello(wxCommandEvent& event);
 	void OnExit(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
+
+// member variables
+private:
+	ListPanel *m_panel;
+
+private:
 	wxDECLARE_EVENT_TABLE();
 };
 
@@ -35,6 +45,7 @@ wxIMPLEMENT_APP(MyApp);
 
 bool MyApp::OnInit()
 {
+	// TODO: Read the size from the settings file.
 	MyFrame *frame = new MyFrame("Hello World", wxPoint(50, 50), wxSize(450, 340));
 	frame->Show(true);
 	return true;
@@ -56,6 +67,10 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	SetMenuBar(menuBar);
 	CreateStatusBar();
 	SetStatusText("Welcome to wxWidgets!");
+
+	// TODO:  set the position and size based on the size of the current frame.
+	m_panel = new ListPanel(this, 10, 10, 300, 100);
+
 }
 
 void MyFrame::OnExit(wxCommandEvent& event)
