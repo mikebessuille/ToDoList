@@ -67,7 +67,9 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	SetMenuBar(menuBar);
 	CreateStatusBar();
 	SetStatusText("Welcome to wxWidgets!");
+	SetMinSize(wxSize(300, 300));
 
+	// The ListPanel which contains all the ToDoItems
 	m_panel = new ListPanel(this);
 
 }

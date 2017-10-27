@@ -30,9 +30,12 @@ ListPanel::ListPanel(wxFrame *frame, int x, int y, int w, int h) :
 	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 	for (auto &it : m_Items)
 	{
-		// Flags: Vertically stretchable, Horizontally not stretchable with border width 5.
+		// Flags: Vertically not stretchable (0 to constructor)
+		// Horizontally stretchable (Expand())
+		// Left-aligned
+		// with border width 5.
 		topsizer->Add(	it.get(), // each ToDoItem panel
-						wxSizerFlags(0).Left().Border(wxALL, 5));
+						wxSizerFlags(0).Left().Expand().Border(wxALL, 5));
 	}
 	SetSizerAndFit(topsizer); // use the sizer for layout
 }
