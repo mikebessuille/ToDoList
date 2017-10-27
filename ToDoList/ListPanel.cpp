@@ -23,15 +23,26 @@ ListPanel::ListPanel(wxFrame *frame, int x, int y, int w, int h) :
 	// TODO: populate from a loaded list
 
 	// TODO: want this to take 'this' rather than frame
-	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(frame, 0, 0, w, 20);
+	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this);
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(frame, 0, 20, w, 20);
+	item = make_shared<ToDoItem>(this);
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(frame, 0, 40, w, 20);
+	item = make_shared<ToDoItem>(this);
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(frame, 0, 60, w, 20);
+	item = make_shared<ToDoItem>(this);
 	m_Items.push_back(item);
 	
+	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
+	for (auto &it : m_Items)
+	{
+		// Flags: Vertically stretchable, Horizontally not stretchable with border width 5.
+		topsizer->Add(	it.get(), // each ToDoItem panel
+						wxSizerFlags(0).Top().Border(wxALL, 5));
+	}
+	SetSizerAndFit(topsizer); // use the sizer for layout and size window
+							  // accordingly and prevent it from being resized
+							  // to smaller size
+
 	/*
 	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
 	// create text ctrl with minimal size 100x60

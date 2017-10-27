@@ -9,7 +9,7 @@ class ToDoItem :
 	public wxPanel
 {
 public:
-	ToDoItem(wxFrame *frame, int x, int y, int w, int h);
+	ToDoItem(wxWindow *parent);
 	virtual ~ToDoItem();
 	void OnIdle(wxIdleEvent &event);
 

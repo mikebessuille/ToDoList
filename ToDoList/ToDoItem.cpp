@@ -9,8 +9,8 @@ wxBEGIN_EVENT_TABLE(ToDoItem, wxPanel)
 wxEND_EVENT_TABLE()
 
 
-ToDoItem::ToDoItem(wxFrame *frame, int x, int y, int w, int h) :
-	wxPanel(frame, wxID_ANY, wxPoint(x, y), wxSize(w, h))
+ToDoItem::ToDoItem(wxWindow *parent) :
+	wxPanel(parent, wxID_ANY)
 {
 
 	m_wrappingText = new wxStaticText(this, wxID_ANY,
