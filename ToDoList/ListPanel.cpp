@@ -18,8 +18,6 @@ ListPanel::ListPanel(wxFrame *frame, int x, int y, int w, int h) :
 		wxScrolledWindow(frame, wxID_ANY, wxPoint(x, y), wxSize(w, h))
 {
 	// TODO: populate from a loaded list
-
-	// TODO: want this to take 'this' rather than frame
 	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this);
 	m_Items.push_back(item);
 	item = make_shared<ToDoItem>(this);
@@ -34,7 +32,7 @@ ListPanel::ListPanel(wxFrame *frame, int x, int y, int w, int h) :
 	{
 		// Flags: Vertically stretchable, Horizontally not stretchable with border width 5.
 		topsizer->Add(	it.get(), // each ToDoItem panel
-						wxSizerFlags(0).Top().Border(wxALL, 5));
+						wxSizerFlags(0).Left().Border(wxALL, 5));
 	}
 	SetSizerAndFit(topsizer); // use the sizer for layout
 }

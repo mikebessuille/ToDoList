@@ -15,7 +15,7 @@ using namespace std;
 class ListPanel : public wxScrolledWindow
 {
 public:
-	ListPanel(wxFrame *frame, int x, int y, int w, int h);
+	ListPanel(wxFrame *frame, int x = -1, int y = -1, int w = -1, int h = -1);
 	virtual ~ListPanel();
 
 	void OnIdle(wxIdleEvent &event);

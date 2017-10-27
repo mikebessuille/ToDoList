@@ -68,8 +68,7 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	CreateStatusBar();
 	SetStatusText("Welcome to wxWidgets!");
 
-	// TODO:  set the position and size based on the size of the current frame.
-	m_panel = new ListPanel(this, 10, 10, 300, 100);
+	m_panel = new ListPanel(this);
 
 }
 
