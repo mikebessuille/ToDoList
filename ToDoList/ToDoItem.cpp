@@ -41,6 +41,7 @@ ToDoItem::ToDoItem(wxWindow *parent) :
 
 	// TODO: find a nicer style...
 	SetWindowStyle(wxBORDER_SUNKEN);
+	SetBackgroundColour(wxColour(*wxLIGHT_GREY));
 }
 
 
@@ -126,11 +127,15 @@ void ToDoItem::OnMouseLeaveWindow(wxMouseEvent& event)
 
 void ToDoItem::Select()
 {
-
+	SetWindowStyle(wxBORDER_RAISED);
+	SetBackgroundColour(wxColour(*wxWHITE));
+	Refresh();
 }
 
 
 void ToDoItem::Deselect()
 {
-
+	SetWindowStyle(wxBORDER_SUNKEN);
+	SetBackgroundColour(wxColour(*wxLIGHT_GREY));
+	Refresh();
 }
