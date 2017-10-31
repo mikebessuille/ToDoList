@@ -19,11 +19,17 @@ public:
 	virtual ~ListPanel();
 
 	void OnIdle(wxIdleEvent &event);
+	void SelectItem(ToDoItem *item);
 
+private:
+	void OnMouseLeftDown(wxMouseEvent& event);
+	void OnMouseLeftUp(wxMouseEvent& event);
+	void OnMouseLeaveWindow(wxMouseEvent& event);
 
 // Controls
 private:
 	vector<shared_ptr<ToDoItem>> m_Items;
+	ToDoItem* m_SelectedItem = nullptr;
 
 	wxDECLARE_EVENT_TABLE();
 
