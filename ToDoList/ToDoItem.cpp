@@ -30,6 +30,10 @@ ToDoItem::ToDoItem(wxWindow *parent) :
 	);
 	// This is required to ensure the min size isn't set to the full length of the string:
 	m_wrappingText->SetMinSize(wxSize(100, -1)); // -1 here means unspecified (use default)
+	// Specify the mouse handler for left-button-down to be handled first by the ToDoItem, not the
+	// text control itself.
+	// TODO: Eventually change this to an editable control
+	m_wrappingText->Bind(wxEVT_LEFT_DOWN, &ToDoItem::OnMouseLeftDown, this);
 
 	wxButton *but = new wxButton(this, wxID_ANY, wxT("Useless Button"));
 
@@ -56,11 +60,6 @@ void ToDoItem::OnIdle(wxIdleEvent& event)
 }
 
 
-// TODO:
-// Hmmm, this only fires when the user clicks on the border area of the TodoItem.  Otherwise
-// the mouse event gets trapped by the text control or button (or whatever) that is in the window.
-// Use Bind like this:  https://stackoverflow.com/questions/36629506/propagate-wxwindows-mouse-events-upwards
-
 /*
 myName = new wxStaticText(this,-1,device.myName,wxPoint(10,10));
 myName->Bind( wxEVT_RIGHT_DOWN, &cDevicePanel::OnRightClick, this );
@@ -78,6 +77,10 @@ myEnergy->Bind( wxEVT_RIGHT_DOWN, &cDevicePanel::OnRightClick, this );
 Bind(wxEVT_RIGHT_DOWN,&cDevicePanel::OnRightClick, this );
 */
 
+// These mouse events only fire when the user clicks on the border area of the TodoItem.  Otherwise
+// the mouse event gets trapped by the text control or button (or whatever) that is in the window.
+// Use Bind like this:  https://stackoverflow.com/questions/36629506/propagate-wxwindows-mouse-events-upwards
+
 void ToDoItem::OnMouseLeftDown(wxMouseEvent& event)
 {
 	/*
@@ -94,6 +97,10 @@ void ToDoItem::OnMouseLeftDown(wxMouseEvent& event)
 	{
 		parent->SelectItem(this);
 	}
+
+	// TODO:
+	// Pass the mouse message to the text control for processing, if the mouse was clicked on the text control itself.
+	// (Only if the item was already selected?  Determine that by changing SelectItem() to receive a return value?)
 }
 
 void ToDoItem::OnMouseLeftUp(wxMouseEvent& WXUNUSED(event))
