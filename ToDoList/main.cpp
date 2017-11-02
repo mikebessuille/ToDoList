@@ -65,13 +65,20 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	menuBar->Append(menuFile, "&File");
 	menuBar->Append(menuHelp, "&Help");
 	SetMenuBar(menuBar);
+	/*
 	CreateStatusBar();
 	SetStatusText("Welcome to wxWidgets!");
-	SetMinSize(wxSize(300, 300));
+	*/
+	SetMinSize(wxSize(300, 350)); // Of the whole MyFrame (which contains the whole app)
 
 	// The ListPanel which contains all the ToDoItems
 	m_panel = new ListPanel(this);
 
+	// TODO: Create a bottom window / panel, with an "Add" button
+
+	// TODO: add the ListPanel and bottom panel into a new vertical sizer 
+
+	// TODO: call SetSizer() into this MyFrame()
 }
 
 void MyFrame::OnExit(wxCommandEvent& event)
