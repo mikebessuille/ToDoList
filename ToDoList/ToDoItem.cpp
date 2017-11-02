@@ -45,7 +45,7 @@ ToDoItem::ToDoItem(wxWindow *parent) :
 		wxRE_MULTILINE
 	);
 	m_wrappingText->SetMinSize(wxSize(150, 50)); // for RichText otherwise it doesn't display correctly?
-	m_wrappingText->SetEditable(false);
+	// m_wrappingText->SetEditable(false);
 
 
 	// Specify the mouse handler for left-button-down to be handled first by the ToDoItem, not the
@@ -61,8 +61,10 @@ ToDoItem::ToDoItem(wxWindow *parent) :
 	SetSizerAndFit( sizer ); // use the sizer for layout
 
 	// TODO: find a nicer style...
-	SetWindowStyle(wxBORDER_SUNKEN);
-	SetBackgroundColour(wxColour(*wxLIGHT_GREY));
+	// SetWindowStyle(wxBORDER_SUNKEN);
+	// SetBackgroundColour(wxColour(*wxLIGHT_GREY));
+	Deselect();
+
 }
 
 
@@ -99,7 +101,7 @@ void ToDoItem::OnMouseLeftDown(wxMouseEvent& event)
 	}
 
 	// Pass the mouse message to the text control for processing, if the mouse was clicked on the text control itself.
-	// TODO: (Only if the item was already selected?  Determine that by changing SelectItem() to receive a return value?)
+	// TODO: Consider: (Only if the item was already selected?  Determine that by changing SelectItem() to receive a return value?)
 	event.Skip(); // Causes the control's event handler to handle this event as well!
 }
 
@@ -137,6 +139,7 @@ void ToDoItem::Select()
 	SetWindowStyle(wxBORDER_RAISED);
 	SetBackgroundColour(wxColour(*wxWHITE));
 	m_wrappingText->SetEditable(true);
+	m_wrappingText->EnableVerticalScrollbar(true);
 	Refresh();
 }
 
@@ -148,5 +151,7 @@ void ToDoItem::Deselect()
 	// refresh the RichTextCtrl so that any mouse selections are removed.
 	m_wrappingText->SelectNone();
 	m_wrappingText->SetEditable(false);
+	m_wrappingText->ShowPosition(0);
+	m_wrappingText->EnableVerticalScrollbar(false);
 	Refresh();
 }

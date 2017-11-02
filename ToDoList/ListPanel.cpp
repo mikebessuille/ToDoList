@@ -20,7 +20,7 @@ wxEND_EVENT_TABLE()
 ListPanel::ListPanel(wxFrame *frame, int x, int y, int w, int h) :
 		wxScrolledWindow(frame, wxID_ANY, wxPoint(x, y), wxSize(w, h))
 {
-	// TODO: populate from a loaded list
+	// TODO: populate from a loaded list.  (RichTextCtrl has LoadFile(), SaveFile() methods
 	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this);
 	m_Items.push_back(item);
 	item = make_shared<ToDoItem>(this);
