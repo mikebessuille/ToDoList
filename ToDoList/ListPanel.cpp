@@ -99,3 +99,17 @@ void ListPanel::SelectItem(ToDoItem *item)
 		item->Select();
 	}
 }
+
+void ListPanel::AddItem() // TODO: Modify to take a string
+{
+	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this);
+	if (item != nullptr)
+	{
+		m_Items.push_back(item);
+		GetSizer()->Add(item.get(), wxSizerFlags(0).Left().Expand().Border(wxALL, 5));
+	}
+	GetSizer()->RecalcSizes();
+	GetSizer()->Layout();
+	Refresh();
+	// TODO:  HMMM, This DOES NOT WORK CORRECTLY!!!!
+}

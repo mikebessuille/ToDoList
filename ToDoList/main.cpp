@@ -128,6 +128,10 @@ void MyFrame::CreateMenu()
 
 void MyFrame::OnAddButton(wxCommandEvent& event)
 {
-	// TODO:  implement this.
-	Close(true);
+	// TODO: implement this. 
+	// TODO: Bring up a dialogue box to enter the text.
+	// TODO: Modify AddItem() to take a string!!!
+	// TODO: Modify ToDoItem() to take a string, and not generate fake text data!!!
+	
+	m_ListPanel->AddItem();
 }
