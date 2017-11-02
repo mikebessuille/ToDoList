@@ -1,6 +1,8 @@
 #include "ToDoItem.h"
 #include "ListPanel.h"
 
+#include <wx/richtext/richtextctrl.h>
+
 
 //
 // Event table for events handled by ListPanel
@@ -17,22 +19,37 @@ wxEND_EVENT_TABLE()
 ToDoItem::ToDoItem(wxWindow *parent) :
 	wxPanel(parent, wxID_ANY)
 {
-	m_wrappingText = new wxStaticText(this, wxID_ANY,
-		wxT("Hi, this is a really long line of text ")
-		wxT("meant to demonstrate text wrapping. ")
-		wxT("It's entirely useless.")
-		wxT("\n\n")
-		wxT("This is also supposed to demonstrate how ")
-		wxT("to use static controls with line wrapping."),
+	wxString myText =	wxT("Hi, this is a really long line of text ")
+						wxT("meant to demonstrate text wrapping. ")
+						wxT("It's entirely useless.")
+						wxT("\n\n")
+						wxT("This is also supposed to demonstrate how ")
+						wxT("to use static controls with line wrapping.");
+
+	/*
+	m_wrappingText = new wxStaticText(	this, wxID_ANY,
+		myText,
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxST_NO_AUTORESIZE | wxST_ELLIPSIZE_END
 	);
 	// This is required to ensure the min size isn't set to the full length of the string:
-	m_wrappingText->SetMinSize(wxSize(100, -1)); // -1 here means unspecified (use default)
+	// m_wrappingText->SetMinSize(wxSize(100, -1)); // -1 here means unspecified (use default)
+	*/
+	
+	m_wrappingText = new wxRichTextCtrl(	this, wxID_ANY,
+		myText,
+		wxDefaultPosition,
+		wxDefaultSize,
+		// wxST_NO_AUTORESIZE | wxST_ELLIPSIZE_END
+		wxRE_MULTILINE
+	);
+	m_wrappingText->SetMinSize(wxSize(150, 50)); // for RichText otherwise it doesn't display correctly?
+	m_wrappingText->SetEditable(false);
+
+
 	// Specify the mouse handler for left-button-down to be handled first by the ToDoItem, not the
 	// text control itself.
-	// TODO: Eventually change this to an editable control
 	m_wrappingText->Bind(wxEVT_LEFT_DOWN, &ToDoItem::OnMouseLeftDown, this);
 
 	wxButton *but = new wxButton(this, wxID_ANY, wxT("Useless Button"));
@@ -60,23 +77,6 @@ void ToDoItem::OnIdle(wxIdleEvent& event)
 }
 
 
-/*
-myName = new wxStaticText(this,-1,device.myName,wxPoint(10,10));
-myName->Bind( wxEVT_RIGHT_DOWN, &cDevicePanel::OnRightClick, this );
-myPower = new wxStaticText(this,-1,
-wxString::Format("Power: %f kw",myDevice.myPower),
-wxPoint(20,30));
-myPower->Bind( wxEVT_RIGHT_DOWN, &cDevicePanel::OnRightClick, this );
-
-myEnergy = new wxStaticText(this,-1,
-wxString::Format("Energy: %f kwh",myDevice.myEnergy),
-wxPoint(20,50));
-myEnergy->Bind( wxEVT_RIGHT_DOWN, &cDevicePanel::OnRightClick, this );
-
-// right clicks on panel background
-Bind(wxEVT_RIGHT_DOWN,&cDevicePanel::OnRightClick, this );
-*/
-
 // These mouse events only fire when the user clicks on the border area of the TodoItem.  Otherwise
 // the mouse event gets trapped by the text control or button (or whatever) that is in the window.
 // Use Bind like this:  https://stackoverflow.com/questions/36629506/propagate-wxwindows-mouse-events-upwards
@@ -98,9 +98,9 @@ void ToDoItem::OnMouseLeftDown(wxMouseEvent& event)
 		parent->SelectItem(this);
 	}
 
-	// TODO:
 	// Pass the mouse message to the text control for processing, if the mouse was clicked on the text control itself.
-	// (Only if the item was already selected?  Determine that by changing SelectItem() to receive a return value?)
+	// TODO: (Only if the item was already selected?  Determine that by changing SelectItem() to receive a return value?)
+	event.Skip(); // Causes the control's event handler to handle this event as well!
 }
 
 void ToDoItem::OnMouseLeftUp(wxMouseEvent& WXUNUSED(event))
@@ -136,6 +136,7 @@ void ToDoItem::Select()
 {
 	SetWindowStyle(wxBORDER_RAISED);
 	SetBackgroundColour(wxColour(*wxWHITE));
+	m_wrappingText->SetEditable(true);
 	Refresh();
 }
 
@@ -144,5 +145,8 @@ void ToDoItem::Deselect()
 {
 	SetWindowStyle(wxBORDER_SUNKEN);
 	SetBackgroundColour(wxColour(*wxLIGHT_GREY));
+	// refresh the RichTextCtrl so that any mouse selections are removed.
+	m_wrappingText->SelectNone();
+	m_wrappingText->SetEditable(false);
 	Refresh();
 }

@@ -4,6 +4,8 @@
 #include <wx/wx.h>
 #endif
 
+#include <wx/richtext/richtextctrl.h>
+
 
 class ListPanel; // forward declaration
 
@@ -24,7 +26,8 @@ private:
 
 // Member Variables:
 private:
-	wxStaticText  *m_wrappingText; // TEMPORARY for TEST
+	// wxStaticText  *m_wrappingText; // TEMPORARY for TEST
+	wxRichTextCtrl  *m_wrappingText;
 
 	wxDECLARE_EVENT_TABLE();
 };
