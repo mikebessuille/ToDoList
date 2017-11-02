@@ -41,10 +41,9 @@ ToDoItem::ToDoItem(wxWindow *parent) :
 		myText,
 		wxDefaultPosition,
 		wxDefaultSize,
-		// wxST_NO_AUTORESIZE | wxST_ELLIPSIZE_END
 		wxRE_MULTILINE
 	);
-	m_wrappingText->SetMinSize(wxSize(150, 50)); // for RichText otherwise it doesn't display correctly?
+	m_wrappingText->SetMinSize(wxSize(250, 50)); // for RichText otherwise it doesn't display correctly?
 	// m_wrappingText->SetEditable(false);
 
 

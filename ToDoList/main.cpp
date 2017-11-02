@@ -22,6 +22,8 @@ private:
 	void OnHello(wxCommandEvent& event);
 	void OnExit(wxCommandEvent& event);
 	void OnAbout(wxCommandEvent& event);
+	void OnAddButton(wxCommandEvent& event);
+
 
 private:
 	void CreateMenu();
@@ -41,10 +43,14 @@ enum
 	ID_Hello = 1
 };
 
+const int  ID_ADDBUTTON = 101;
+
+
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
-EVT_MENU(ID_Hello, MyFrame::OnHello)
-EVT_MENU(wxID_EXIT, MyFrame::OnExit)
-EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
+	EVT_MENU(ID_Hello, MyFrame::OnHello)
+	EVT_MENU(wxID_EXIT, MyFrame::OnExit)
+	EVT_MENU(wxID_ABOUT, MyFrame::OnAbout)
+	EVT_BUTTON(ID_ADDBUTTON, MyFrame::OnAddButton)
 wxEND_EVENT_TABLE()
 wxIMPLEMENT_APP(MyApp);
 
@@ -60,29 +66,28 @@ MyFrame::MyFrame(const wxString& title, const wxPoint& pos, const wxSize& size)
 	: wxFrame(NULL, wxID_ANY, title, pos, size)
 {
 	CreateMenu();
-	SetMinSize(wxSize(300, 350)); // Of the whole MyFrame (which contains the whole app)
+	SetMinSize(wxSize(350, 350)); // Of the whole MyFrame (which contains the whole app)
 
 	// The ListPanel which contains all the ToDoItems
 	m_ListPanel = new ListPanel(this);
+	m_ListPanel->SetMinSize(wxSize(-1, 280)); // -1 means unspecified (use default).  Height should be based on size of each TodoItem
 
-	/*
+	
 	// Create a bottom window / panel, with an "Add" button
 	m_BottomPanel = new wxPanel(this);
-	wxButton *m_AddButton = new wxButton(m_BottomPanel, wxID_ANY, wxT("Add"));
-	*/
+	wxButton *m_AddButton = new wxButton(m_BottomPanel, ID_ADDBUTTON, wxT("Add"));
+	
 
 	// Add the ListPanel and bottom panel into a new vertical sizer 
 	// Flags: Vertically not stretchable (0 to constructor)
 	// Horizontally stretchable (Expand())
 	// Left-aligned
 	// with border width 5.
-	/*
 	wxBoxSizer *sizer = new wxBoxSizer(wxVERTICAL);
 	sizer->Add(m_ListPanel, wxSizerFlags(1).Left().Expand()); // No Border
 	sizer->Add(m_BottomPanel, wxSizerFlags(0).Left().Border(wxALL, 5)); // Cannot expand vertically or horizontally
 	sizer->SetSizeHints(this); // Should never resize smaller than the initial window... ?
 	SetSizer(sizer); // use the sizer for layout
-	*/
 }
 
 void MyFrame::OnExit(wxCommandEvent& event)
@@ -119,4 +124,10 @@ void MyFrame::CreateMenu()
 	CreateStatusBar();
 	SetStatusText("Welcome to wxWidgets!");
 	*/
+}
+
+void MyFrame::OnAddButton(wxCommandEvent& event)
+{
+	// TODO:  implement this.
+	Close(true);
 }
