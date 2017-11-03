@@ -21,6 +21,9 @@ public:
 	void OnIdle(wxIdleEvent &event);
 	void SelectItem(ToDoItem *item);
 	void AddItem(); // TODO: Modify to take a string
+	void DeleteItem(ToDoItem *item);
+	int GetIndex(ToDoItem *item);
+
 
 private:
 	void OnMouseLeftDown(wxMouseEvent& event);

@@ -6,7 +6,7 @@
 #endif
 
 #include "ListPanel.h"
-
+#include "ControlIDs.h"
 
 class MyApp : public wxApp
 {
@@ -43,7 +43,6 @@ enum
 	ID_Hello = 1
 };
 
-const int  ID_ADDBUTTON = 101;
 
 
 wxBEGIN_EVENT_TABLE(MyFrame, wxFrame)
@@ -128,7 +127,6 @@ void MyFrame::CreateMenu()
 
 void MyFrame::OnAddButton(wxCommandEvent& event)
 {
-	// TODO: implement this. 
 	// TODO: Bring up a dialogue box to enter the text.
 	// TODO: Modify AddItem() to take a string!!!
 	// TODO: Modify ToDoItem() to take a string, and not generate fake text data!!!

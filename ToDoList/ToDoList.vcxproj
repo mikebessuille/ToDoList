@@ -127,6 +127,7 @@
     <ClCompile Include="ToDoItem.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ControlIDs.h" />
     <ClInclude Include="ListPanel.h" />
     <ClInclude Include="ToDoItem.h" />
   </ItemGroup>

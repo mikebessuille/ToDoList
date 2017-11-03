@@ -1,6 +1,7 @@
 #include "ListPanel.h"
 #include "ToDoItem.h"
 #include <memory>
+#include <algorithm>
 
 
 using namespace std;
@@ -108,8 +109,71 @@ void ListPanel::AddItem() // TODO: Modify to take a string
 		m_Items.push_back(item);
 		GetSizer()->Add(item.get(), wxSizerFlags(0).Left().Expand().Border(wxALL, 5));
 	}
-	GetSizer()->RecalcSizes();
-	GetSizer()->Layout();
-	Refresh();
+	//GetSizer()->RecalcSizes();
+	//GetSizer()->Layout();
+	Layout();
+	//Refresh();
 	// TODO:  HMMM, This DOES NOT WORK CORRECTLY!!!!
+}
+
+
+void ListPanel::DeleteItem(ToDoItem *item)
+{
+	// Deselect if necessary
+	if (m_SelectedItem && m_SelectedItem == item )
+	{
+		m_SelectedItem->Deselect();
+		m_SelectedItem = nullptr;
+	}
+	
+	// Don't need to remove the item from the parent ListPanel or its sizer; those are done automatically
+	// when the ToDoItem gets destroyed.
+	/*
+	// Find this item in the sizer list
+	int index = GetIndex(item);
+	if (index == -1)
+		return;
+
+	// Remove from sizer
+	GetSizer()->Remove(index);
+
+	// Remove from ListPanel
+	// Already done by Destroy() in the ToDoItem!
+	*/
+
+
+	// No need to call Destroy() because it will get called by the window's destructor.
+	// Also, can't call Destroy() from here because this method is called from ToDoItem itself, which is
+	// still on the callstack. 
+	// item->Destroy(); // Removes this from the current parent window, and from its sizer?
+
+	
+	// remove from m_Items; this should delete the item when this goes out of scope, as it's a shared_ptr
+	// Erase-Remove idiom
+	m_Items.erase(std::remove_if(m_Items.begin(), m_Items.end(),
+		[item](shared_ptr<ToDoItem> const& i) { return i.get() == item; }),
+		m_Items.end());
+
+
+
+	// Relayout the Panel / Sizer...
+	Layout();
+}
+
+
+int ListPanel::GetIndex(ToDoItem *item)
+{
+	int index = 0;
+	const wxSizerItemList& children = GetSizer()->GetChildren();
+	wxSizerItemList::const_iterator it = children.begin(), end = children.end();
+
+	for (; it != end; ++it, index++ )
+	{
+		wxSizerItem* p_item = *it;
+		if (p_item->GetWindow() == item )
+		{
+			return(index);
+		}
+	}
+	return(-1);
 }

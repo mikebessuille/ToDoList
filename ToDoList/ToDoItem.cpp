@@ -1,6 +1,6 @@
 #include "ToDoItem.h"
 #include "ListPanel.h"
-
+#include "ControlIDs.h"
 #include <wx/richtext/richtextctrl.h>
 
 
@@ -12,6 +12,7 @@ wxBEGIN_EVENT_TABLE(ToDoItem, wxPanel)
 	EVT_LEFT_DOWN(ToDoItem::OnMouseLeftDown)
 	EVT_LEFT_UP(ToDoItem::OnMouseLeftUp)
 	EVT_LEAVE_WINDOW(ToDoItem::OnMouseLeaveWindow)
+	EVT_BUTTON(ID_DELETE_BUTTON, ToDoItem::OnDeleteButton)
 wxEND_EVENT_TABLE()
 
 
@@ -51,12 +52,12 @@ ToDoItem::ToDoItem(wxWindow *parent) :
 	// text control itself.
 	m_wrappingText->Bind(wxEVT_LEFT_DOWN, &ToDoItem::OnMouseLeftDown, this);
 
-	wxButton *but = new wxButton(this, wxID_ANY, wxT("Useless Button"));
+	m_DelButton = new wxButton(this, ID_DELETE_BUTTON, wxT("Delete"));
 
 	// Add all the elements of a ToDoItem into a horizontal sizer
 	wxBoxSizer *sizer = new wxBoxSizer(wxHORIZONTAL);
 	sizer->Add( m_wrappingText, wxSizerFlags(1).Left().Border(wxALL, 5));
-	sizer->Add(	but, wxSizerFlags(0).Right().Border(wxALL, 5)); // Right-align all buttons
+	sizer->Add(m_DelButton, wxSizerFlags(0).Right().Border(wxALL, 5)); // Right-align all buttons
 	SetSizerAndFit( sizer ); // use the sizer for layout
 
 	// TODO: find a nicer style...
@@ -139,6 +140,9 @@ void ToDoItem::Select()
 	SetBackgroundColour(wxColour(*wxWHITE));
 	m_wrappingText->SetEditable(true);
 	m_wrappingText->EnableVerticalScrollbar(true);
+	m_wrappingText->SetBackgroundColour(wxColour(*wxWHITE));
+	m_DelButton->Show();
+	Layout();
 	Refresh();
 }
 
@@ -152,5 +156,17 @@ void ToDoItem::Deselect()
 	m_wrappingText->SetEditable(false);
 	m_wrappingText->ShowPosition(0);
 	m_wrappingText->EnableVerticalScrollbar(false);
+	m_wrappingText->SetBackgroundColour(wxColour(*wxLIGHT_GREY));
+	m_DelButton->Hide();
+	Layout();
 	Refresh();
+}
+
+void ToDoItem::OnDeleteButton(wxCommandEvent& event)
+{
+	ListPanel *parent = dynamic_cast<ListPanel*>(GetParent());
+	if (parent)
+	{
+		parent->DeleteItem(this); // called to remove it from its m_Items list.
+	}
 }
