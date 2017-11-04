@@ -17,29 +17,11 @@ wxEND_EVENT_TABLE()
 
 
 
-ToDoItem::ToDoItem(wxWindow *parent) :
+ToDoItem::ToDoItem(wxWindow *parent, wxString itemStr = wxT("Default String") ) :
 	wxPanel(parent, wxID_ANY)
 {
-	wxString myText =	wxT("Hi, this is a really long line of text ")
-						wxT("meant to demonstrate text wrapping. ")
-						wxT("It's entirely useless.")
-						wxT("\n\n")
-						wxT("This is also supposed to demonstrate how ")
-						wxT("to use static controls with line wrapping.");
-
-	/*
-	m_wrappingText = new wxStaticText(	this, wxID_ANY,
-		myText,
-		wxDefaultPosition,
-		wxDefaultSize,
-		wxST_NO_AUTORESIZE | wxST_ELLIPSIZE_END
-	);
-	// This is required to ensure the min size isn't set to the full length of the string:
-	// m_wrappingText->SetMinSize(wxSize(100, -1)); // -1 here means unspecified (use default)
-	*/
-	
 	m_wrappingText = new wxRichTextCtrl(	this, wxID_ANY,
-		myText,
+		itemStr,
 		wxDefaultPosition,
 		wxDefaultSize,
 		wxRE_MULTILINE

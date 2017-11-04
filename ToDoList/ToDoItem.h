@@ -13,7 +13,7 @@ class ToDoItem :
 	public wxPanel
 {
 public:
-	ToDoItem(wxWindow *parent);
+	ToDoItem(wxWindow *parent, wxString itemStr );
 	virtual ~ToDoItem();
 	void OnIdle(wxIdleEvent &event);
 	void Select();

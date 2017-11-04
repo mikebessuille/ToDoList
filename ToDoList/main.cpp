@@ -4,6 +4,7 @@
 #ifndef WX_PRECOMP
 #include <wx/wx.h>
 #endif
+#include "wx/textdlg.h"
 
 #include "ListPanel.h"
 #include "ControlIDs.h"
@@ -127,9 +128,18 @@ void MyFrame::CreateMenu()
 
 void MyFrame::OnAddButton(wxCommandEvent& event)
 {
-	// TODO: Bring up a dialogue box to enter the text.
-	// TODO: Modify AddItem() to take a string!!!
-	// TODO: Modify ToDoItem() to take a string, and not generate fake text data!!!
+	// Bring up a dialogue box to enter the text.
+
+	wxTextEntryDialog dialog( this,
+			wxT(""),
+			wxT("New ToDo Item"),
+			wxT(""),
+			wxOK | wxCANCEL);
+	if (dialog.ShowModal() == wxID_OK)
+	{		
+		m_ListPanel->AddItem( dialog.GetValue() );
+	}
+
+
 	
-	m_ListPanel->AddItem();
 }

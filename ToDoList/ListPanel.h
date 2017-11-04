@@ -20,7 +20,7 @@ public:
 
 	void OnIdle(wxIdleEvent &event);
 	void SelectItem(ToDoItem *item);
-	void AddItem(); // TODO: Modify to take a string
+	void AddItem( wxString str );
 	void DeleteItem(ToDoItem *item);
 	int GetIndex(ToDoItem *item);
 

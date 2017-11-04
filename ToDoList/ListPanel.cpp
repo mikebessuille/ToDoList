@@ -22,17 +22,17 @@ ListPanel::ListPanel(wxFrame *frame, int x, int y, int w, int h) :
 		wxScrolledWindow(frame, wxID_ANY, wxPoint(x, y), wxSize(w, h), wxVSCROLL )
 {
 	// TODO: populate from a loaded list.  (RichTextCtrl has LoadFile(), SaveFile() methods
-	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this);
+	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this, wxT("Todo item 1"));
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(this);
+	item = make_shared<ToDoItem>(this, wxT("Todo item 2"));
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(this);
+	item = make_shared<ToDoItem>(this, wxT("Todo item 3"));
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(this);
+	item = make_shared<ToDoItem>(this, wxT("Todo item 4"));
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(this);
+	item = make_shared<ToDoItem>(this, wxT("Todo item 5"));
 	m_Items.push_back(item);
-	item = make_shared<ToDoItem>(this);
+	item = make_shared<ToDoItem>(this, wxT("Todo item 6"));
 	m_Items.push_back(item);
 
 	wxBoxSizer *topsizer = new wxBoxSizer(wxVERTICAL);
@@ -101,9 +101,9 @@ void ListPanel::SelectItem(ToDoItem *item)
 	}
 }
 
-void ListPanel::AddItem() // TODO: Modify to take a string
+void ListPanel::AddItem( wxString str )
 {
-	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this);
+	shared_ptr<ToDoItem> item = make_shared<ToDoItem>(this, str);
 	if (item != nullptr)
 	{
 		m_Items.push_back(item);
@@ -113,7 +113,6 @@ void ListPanel::AddItem() // TODO: Modify to take a string
 	//GetSizer()->Layout();
 	Layout();
 	//Refresh();
-	// TODO:  HMMM, This DOES NOT WORK CORRECTLY!!!!
 }
 
 
