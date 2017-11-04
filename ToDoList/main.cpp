@@ -139,7 +139,4 @@ void MyFrame::OnAddButton(wxCommandEvent& event)
 	{		
 		m_ListPanel->AddItem( dialog.GetValue() );
 	}
-
-
-	
 }

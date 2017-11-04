@@ -42,11 +42,7 @@ ToDoItem::ToDoItem(wxWindow *parent, wxString itemStr = wxT("Default String") ) 
 	sizer->Add(m_DelButton, wxSizerFlags(0).Right().Border(wxALL, 5)); // Right-align all buttons
 	SetSizerAndFit( sizer ); // use the sizer for layout
 
-	// TODO: find a nicer style...
-	// SetWindowStyle(wxBORDER_SUNKEN);
-	// SetBackgroundColour(wxColour(*wxLIGHT_GREY));
 	Deselect();
-
 }
 
 
@@ -120,10 +116,14 @@ void ToDoItem::Select()
 {
 	SetWindowStyle(wxBORDER_RAISED);
 	SetBackgroundColour(wxColour(*wxWHITE));
+
 	m_wrappingText->SetEditable(true);
 	m_wrappingText->EnableVerticalScrollbar(true);
 	m_wrappingText->SetBackgroundColour(wxColour(*wxWHITE));
+	m_wrappingText->SetWindowStyle(wxBORDER_DEFAULT);
+
 	m_DelButton->Show();
+
 	Layout();
 	Refresh();
 }
@@ -131,15 +131,18 @@ void ToDoItem::Select()
 
 void ToDoItem::Deselect()
 {
-	SetWindowStyle(wxBORDER_SUNKEN);
+	SetWindowStyle(wxBORDER_NONE);
 	SetBackgroundColour(wxColour(*wxLIGHT_GREY));
-	// refresh the RichTextCtrl so that any mouse selections are removed.
-	m_wrappingText->SelectNone();
+
+	m_wrappingText->SelectNone(); 	// refresh the RichTextCtrl so that any mouse selections are removed.
 	m_wrappingText->SetEditable(false);
 	m_wrappingText->ShowPosition(0);
 	m_wrappingText->EnableVerticalScrollbar(false);
 	m_wrappingText->SetBackgroundColour(wxColour(*wxLIGHT_GREY));
+	m_wrappingText->SetWindowStyle(wxBORDER_NONE);
+
 	m_DelButton->Hide();
+	
 	Layout();
 	Refresh();
 }
